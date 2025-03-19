@@ -62,7 +62,9 @@ app.get("/error", (req, res) => {
  });
  
 
-app.listen(3000,function(){
-     console.log("server start at port :3000");
-})
+const port = process.env.PORT || 3000; 
+
+app.listen(port, "0.0.0.0", function () {
+    console.log(`Server started successfully on port ${port}`);
+});
 
