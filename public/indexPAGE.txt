@@ -1,0 +1,110 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESTORE</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 0; padding: 0; background: #f8f8f8;">
+
+    <!-- Header -->
+    <header style="background: #ffffff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+        <h2 style="margin: 0; color: #00b748;">Blinkit Clone</h2>
+        <form action="/product/search" method="GET">
+        <input type="text" name="query" placeholder="Search for products..." style="width: 300px; padding: 8px; border: 1px solid #ddd; border-radius: 5px;">
+        <button type="submit">Search</button>
+    </form>
+    <% if (user) { %>
+        <nav>
+            <a href="/profile/<%= user._id %>" style="margin: 0 10px; text-decoration: none; color: #333;">Profile</a>
+            <a href="/orders" style="margin: 0 10px; text-decoration: none; color: #333;">Orders</a>
+            <a href="/cart" style="margin: 0 10px; text-decoration: none; color: #333;">Cart</a>
+          
+        </nav>
+    <% } else { %>
+        <p>Please <a href="/auth/login">login</a> to access your profile, orders, and cart.</p>
+    <% } %>
+    
+    </header>
+
+    <!-- Hero Section -->
+    <section style="background: #d1f5c9; padding: 50px; text-align: center;">
+        <h1>Fresh Vegetables Big Discount</h1>
+        <p>Save up to 50% on your first order</p>
+        <input type="text" placeholder="Your email address" style="padding: 10px; width: 300px; border: none;">
+        <button style="background: #00b748; color: white; padding: 10px 20px; border: none; cursor: pointer;">Subscribe</button>
+    </section>
+
+    <!-- Random Discounted Products Section -->
+    <section style="padding: 20px;">
+        <h2 style="text-align: center; color: #333;">Exclusive 20% Discount Offers</h2>
+        <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 20px;">
+            <% rmproduct.forEach(product => { %>
+                <div style="width: 250px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+                    <h2 style="color: #333; font-size: 20px; margin-bottom: 10px;"><%= product.name %></h2>
+                    <% if(product.image) { %>
+                        <img src="<%= product.image %>" alt="Product Image" width="100" class="product-image">
+                    <% } else { %>
+                        <img src="https://via.placeholder.com/100" alt="Default Product Image" width="100" class="product-image">
+                    <% } %>
+                    
+                    <p style="font-size: 16px; text-decoration: line-through; color: #999;">₹<%= product.price %></p>
+                    <p style="font-size: 18px; font-weight: bold; color: #00b748;">₹<%= (product.price * 0.8).toFixed(2) %></p>
+                    <button style="background: #ff6600; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"><a href="/cart/add/<%=product._id%>" >Grab Deal</a></button>
+                </div>
+            <% }); %>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <% Object.keys(products).forEach(category => { %> 
+        <div style="padding: 20px;">
+            <h2 style="text-align: center;"><%= category %></h2>
+            <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">
+                <% (products[category] || []).forEach(product => { %>  
+                    <div style="width: 250px; background: white; padding: 15px; border-radius: 10px; box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); text-align: center;">
+                        <h2 style="color: #333; font-size: 20px; margin-bottom: 10px;"><%= product.name %></h2>
+                        <% if(product.image) { %>
+                            <img src="<%= product.image %>" alt="Product Image" width="100" class="product-image">
+                        <% } else { %>
+                            <img src="https://via.placeholder.com/100" alt="Default Product Image" width="100" class="product-image">
+                        <% } %>
+                        
+                        <p style="font-size: 16px; font-weight: bold; color: #00b748;">₹<%= product.price %></p>
+                        <p style="color: #555; font-size: 14px; margin-bottom: 5px;">Category: <%= product.category %></p>
+                        <p style="color: #777; font-size: 13px; margin-bottom: 10px;"><%= product.description %></p>
+                        <button style="background: #00b748; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"><a href="/cart/add/<%=product._id%>">Buy Now</a></button>
+                    </div>
+                <% }); %>
+            </div>
+        </div>
+    <% }); %>
+
+    <% if (cartcount > 0) { %>
+        <!-- Cart Footer (Visible when cart is not empty) -->
+        <footer style="position: fixed; bottom: 0; left: 0; width: 100%; background: #ffffff; padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 -2px 5px rgba(0,0,0,0.1);">
+            <p style="margin: 0; font-size: 18px; color: #333;">Items in Cart: <span><%= cartcount %></span></p>
+            <button style="background: #00b748; color: white; padding: 10px 20px; border: none; cursor: pointer; border-radius: 5px;" onclick="window.location.href='/cart'">Next</button>
+        </footer>
+    <% } %>
+
+    <script>
+        // Save scroll position before the page unloads
+        window.addEventListener("beforeunload", function () {
+            localStorage.setItem("scrollPosition", window.scrollY);
+        });
+
+        // Restore scroll position when the page loads
+        window.addEventListener("load", function () {
+            const scrollPosition = localStorage.getItem("scrollPosition");
+            if (scrollPosition) {
+                window.scrollTo(0, parseInt(scrollPosition));
+            }
+        });
+
+        // Clear scroll position when clicking a link (navigating to another page)
+        
+    </script>
+    
+</body>
+</html>

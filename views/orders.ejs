@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color: #b5e8a5; /* Darker shade of #d1f5c9 */
+            --light-color: #ffffff;
+            --accent-color: #4CAF50;
+            --text-color: #333333;
+            --light-text: #666666;
+            --border-color: #e0e0e0;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, var(--light-color) 0%, var(--primary-color) 100%);
+            color: var(--text-color);
+            min-height: 100vh;
+            padding: 30px;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .header h2 {
+            font-size: 32px;
+            color: var(--text-color);
+            display: inline-block;
+            padding: 0 20px;
+        }
+        
+        .header:before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            bottom: -10px;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background-color: var(--accent-color);
+        }
+        
+        .order-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .order-card {
+            background-color: var(--light-color);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 30px;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .order-header {
+            background-color: var(--primary-color);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-header h3 {
+            color: var(--text-color);
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+        }
+        
+        .order-header h3 i {
+            margin-right: 10px;
+            color: var(--accent-color);
+        }
+        
+        .order-header .date {
+            color: var(--light-text);
+            display: flex;
+            align-items: center;
+        }
+        
+        .order-header .date i {
+            margin-right: 8px;
+        }
+        
+        .order-body {
+            padding: 20px;
+        }
+        
+        .order-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        
+        .detail-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(181, 232, 165, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--accent-color);
+        }
+        
+        .detail-text {
+            flex: 1;
+        }
+        
+        .detail-text strong {
+            display: block;
+            margin-bottom: 3px;
+            color: var(--light-text);
+            font-size: 14px;
+        }
+        
+        .detail-text span {
+            font-size: 16px;
+            font-weight: 500;
+        }
+        
+        .products-section {
+            background-color: rgba(181, 232, 165, 0.1);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .products-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .products-header i {
+            color: var(--accent-color);
+            margin-right: 10px;
+        }
+        
+        .product-item {
+            background-color: var(--light-color);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        .product-name {
+            display: flex;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .product-name i {
+            margin-right: 10px;
+            color: var(--light-text);
+        }
+        
+        .product-quantity {
+            background-color: var(--primary-color);
+            padding: 5px 10px;
+            border-radius: 20px;
+            margin: 0 15px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .product-price {
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .no-orders {
+            text-align: center;
+            padding: 50px 0;
+            font-size: 18px;
+            color: var(--light-text);
+        }
+        
+        .no-orders i {
+            display: block;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: var(--accent-color);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-top: 1px dashed var(--border-color);
+            margin-top: 20px;
+            font-weight: 500;
+        }
+        
+        .summary-total {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .order-header .date {
+                margin-top: 10px;
+            }
+            
+            .product-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .product-quantity {
+                margin: 10px 0;
+            }
+            
+            .product-price {
+                align-self: flex-end;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h2><i class="fas fa-history"></i> Your Order History</h2>
+    </div>
+    
+    <div class="order-container">
+        <% if (orders.length > 0) { %>
+            <% orders.forEach(order => { %>
+                <div class="order-card">
+                    <div class="order-header">
+                        <h3><i class="fas fa-shopping-bag"></i> Order ID: <%= order._id %></h3>
+                        <div class="date"><i class="far fa-calendar-alt"></i> <%= order.createdAt.toDateString() %></div>
+                    </div>
+                    
+                    <div class="order-body">
+                        <div class="order-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-rupee-sign"></i>
+                            </div>
+                            <div class="detail-text">
+                                <strong>Total Amount</strong>
+                                <span>₹<%= order.totalAmount %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="detail-text">
+                                <strong>GST Charge</strong>
+                                <span>₹<%= order.gstCharge %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-truck"></i>
+                            </div>
+                            <div class="detail-text">
+                                <strong>Delivery Charge</strong>
+                                <span>₹<%= order.deliveryCharge %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="order-detail">
+                            <div class="detail-icon">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div class="detail-text">
+                                <strong>Delivery Address</strong>
+                                <span><%= order.address.state %>, <%= order.address.city %>, <%= order.address.zip %></span>
+                            </div>
+                        </div>
+                        
+                        <div class="products-section">
+                            <div class="products-header">
+                                <i class="fas fa-box-open"></i>
+                                <h4>Products</h4>
+                            </div>
+                            
+                            <% order.products.forEach(item => { %>
+                                <% if (item.product) { %>
+                                    <div class="product-item">
+                                        <div class="product-name">
+                                            <i class="fas fa-tag"></i>
+                                            <%= item.product.name %>
+                                        </div>
+                                        <div class="product-quantity">
+                                            Qty: <%= item.quantity %>
+                                        </div>
+                                        <div class="product-price">
+                                            ₹<%= item.product.price %>
+                                        </div>
+                                    </div>
+                                <% } else { %>
+                                    <div class="product-item">
+                                        <div class="product-name">
+                                            <i class="fas fa-exclamation-circle"></i>
+                                            Product details unavailable
+                                        </div>
+                                    </div>
+                                <% } %>
+                            <% }); %>
+                            
+                            <div class="summary-row">
+                                <div>Subtotal</div>
+                                <div class="summary-total">₹<%= order.totalAmount %></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <% }); %>
+        <% } else { %>
+            <div class="no-orders">
+                <i class="fas fa-shopping-cart"></i>
+                <p>You have no orders yet.</p>
+            </div>
+        <% } %>
+    </div>
+</body>
+</html>

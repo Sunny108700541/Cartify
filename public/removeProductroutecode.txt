@@ -1,0 +1,19 @@
+router.get("/remove/:id", userIsLoggedIn, async function (req, res) {
+  try {
+    let cart = await cartModel.findOne({ user: req.session.passport.user });
+    if (!cart) {
+      return res.send("something went wrong while removing items");
+    }
+    let index = cart.products.findIndex(item => item.product.toString() === req.params.id);
+    if (index !== -1) {
+      cart.totalPrice -= cart.products[index].product.price;
+      cart.products.splice(index, 1);
+      await cart.save();
+    } else {
+      return res.send("product not found in cart");
+    }
+    res.redirect("back");
+  } catch (err) {
+    res.send(err.message);
+  }
+});

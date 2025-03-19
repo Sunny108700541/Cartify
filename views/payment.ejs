@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment Gateway</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --primary-hover: #1d4ed8;
+            --secondary-blue: #3b82f6;
+            --light-blue: #dbeafe;
+            --success-color: #10b981;
+            --error-color: #ef4444;
+            --bg-color: #f8fafc;
+            --card-bg: #ffffff;
+            --text-color: #1e293b;
+            --text-light: #64748b;
+            --border-color: #e2e8f0;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --rounded: 0.5rem;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.5;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 1.5rem;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+        
+        .card {
+            background-color: var(--card-bg);
+            border-radius: var(--rounded);
+            box-shadow: var(--shadow);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card:hover {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .blue-accent {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 6px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--primary-blue), var(--secondary-blue));
+        }
+        
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+        }
+        
+        .logo-icon {
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            color: var(--text-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.9rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: var(--rounded);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background-color: #f9fafb;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+            background-color: white;
+        }
+        
+        input::placeholder {
+            color: var(--text-light);
+        }
+        
+        button {
+            width: 100%;
+            padding: 0.9rem 1.5rem;
+            background-color: var(--primary-blue);
+            color: white;
+            border: none;
+            border-radius: var(--rounded);
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        .success {
+            color: var(--success-color);
+            font-weight: 500;
+        }
+        
+        .error {
+            color: var(--error-color);
+            font-weight: 500;
+        }
+        
+        .order-info {
+            background-color: var(--light-blue);
+            border-left: 4px solid var(--primary-blue);
+            padding: 1.25rem;
+            border-radius: var(--rounded);
+            margin-bottom: 1.5rem;
+        }
+        
+        .order-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed var(--border-color);
+        }
+        
+        .order-row:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .order-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+        }
+        
+        .order-value {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+        
+        .secure-badge {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1.5rem;
+            color: var(--text-light);
+            font-size: 0.875rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+        
+        .payment-method-icon {
+            width: 40px;
+            height: 25px;
+            background-color: var(--light-blue);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Success animation overlay */
+        .success-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(255, 255, 255, 0.9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .success-overlay.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .checkmark-circle {
+            width: 120px;
+            height: 120px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .checkmark {
+            font-size: 3rem;
+            color: var(--success-color);
+        }
+        
+        .success-message {
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-top: 1rem;
+        }
+        
+        @media (max-width: 640px) {
+            .card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <div class="blue-accent"></div>
+            <div class="logo-container">
+                <div class="logo">
+                    <div class="logo-icon">P</div>
+                    PaymentPro
+                </div>
+            </div>
+            
+            <h2>Secure Payment</h2>
+            
+            <% if (typeof userId === "undefined" || !userId) { %>
+                <form action="/payment" method="POST" id="payment-form">
+                    <button type="submit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                        </svg>
+                        Proceed to Payment
+                    </button>
+                </form>
+            <% } else { %> 
+                <div class="order-info">
+                    <div class="order-row">
+                        <div class="order-label">User ID</div>
+                        <div class="order-value"><%= userId %></div>
+                    </div>
+                    <div class="order-row">
+                        <div class="order-label">Transaction ID</div>
+                        <div class="order-value">TXN<%= Math.floor(Math.random() * 10000000) %></div>
+                    </div>
+                </div>
+                
+                <form action="/payment/process-payment" method="POST" id="payment-form">
+                    <input type="hidden" name="userId" value="<%= userId %>">
+                    <div class="form-group">
+                        <label for="upi_id">UPI ID</label>
+                        <input type="text" id="upi_id" name="upi_id" placeholder="name@bank" required autocomplete="off">
+                    </div>
+                    <button type="submit" id="submit-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <circle cx="12" cy="12" r="10"></circle>
+                            <path d="M16 12l-4 4-4-4"></path>
+                            <path d="M12 8v7"></path>
+                        </svg>
+                        Complete Payment
+                    </button>
+                </form>
+            <% } %>
+            
+            <div class="payment-methods">
+                <div class="payment-method-icon">UPI</div>
+                <div class="payment-method-icon">Gpay</div>
+                <div class="payment-method-icon">PhonePe</div>
+                <div class="payment-method-icon">Paytm</div>
+            </div>
+            
+            <div class="secure-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                Secure & Encrypted Payment
+            </div>
+        </div>
+    </div>
+    
+    <!-- Success overlay -->
+    <div class="success-overlay" id="success-overlay">
+        <div class="success-animation">
+            <div class="checkmark-circle">
+                <div class="checkmark">✓</div>
+            </div>
+            <div class="success-message">Payment Successful</div>
+        </div>
+    </div>
+    
+    <script>
+        // Prevent back button returning to payment page after submission
+        // if (window.history && window.history.pushState) {
+        //     window.addEventListener('popstate', function() {
+        //         window.location.href = '/payment/process-payment'; // Redirect to index page
+        //     });
+        // }
+        
+        // Handle form submission and show success animation
+        document.getElementById('payment-form').addEventListener('submit', function(e) {
+            //e.preventDefault();
+            
+            // Show success overlay
+            document.getElementById('success-overlay').classList.add('show');
+            
+            // Hide overlay and redirect after 1 second
+            setTimeout(function() {
+                // For demonstration - in production, this would happen after server response
+                window.location.href = '/payment/process-payment'; // Redirect to index page
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

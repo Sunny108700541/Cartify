@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order History</title>
+</head>
+<body style="font-family: Arial, sans-serif; margin: 20px; padding: 20px;">
+
+    <h2 style="text-align: center;">Your Order History</h2>
+
+    <% if (orders.length > 0) { %>
+        <% orders.forEach(order => { %>
+            <div style="border: 1px solid #ddd; padding: 20px; margin-bottom: 20px;">
+                <h3>Order ID: <%= order._id %></h3>
+                <p><strong>Date:</strong> <%= order.createdAt.toDateString() %></p>
+                <p><strong>Total Amount:</strong> ₹<%= order.totalAmount %></p>
+                <p><strong>GST Charge:</strong> ₹<%= order.gstCharge %></p>
+                <p><strong>Delivery Charge:</strong> ₹<%= order.deliveryCharge %></p>
+                <p><strong>Address:</strong> <%= order.address.state %>, <%= order.address.city %>, <%= order.address.zip %></p>
+                <h4>Products:</h4>
+                <ul>
+                    <% order.products.forEach(item => { %>
+                        <li><%= item.product.name %> - Quantity: <%= item.quantity %> - Price: ₹<%= item.product.price %></li>
+                    <% }); %>
+                </ul>
+            </div>
+        <% }); %>
+    <% } else { %>
+        <p style="text-align: center;">You have no orders.</p>
+    <% } %>
+
+</body>
+</html>

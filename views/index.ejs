@@ -1,0 +1,955 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ESTORE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #00b748;
+            --secondary: #ff6600;
+            --dark: #333;
+            --light: #f8f8f8;
+            --white: #ffffff;
+            --gray: #f0f0f0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+        
+        body {
+            background: var(--light);
+            min-height: 100vh;
+            padding-bottom: 70px;
+        }
+        
+        /* Header styles */
+        header {
+            background: var(--white);
+            padding: 15px 20px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .logo {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 24px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .search-form {
+            flex-grow: 1;
+            max-width: 500px;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 12px 20px;
+            border: 1px solid #ddd;
+            border-radius: 30px;
+            font-size: 14px;
+            transition: all 0.3s;
+            outline: none;
+        }
+        
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 183, 72, 0.2);
+        }
+        
+        .search-button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary);
+            border: none;
+            color: white;
+            border-radius: 50%;
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .search-button:hover {
+            background: #009f3e;
+        }
+        
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .nav-link {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: var(--dark);
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-link i {
+            font-size: 22px;
+            margin-bottom: 4px;
+        }
+        
+        .login-msg {
+            font-size: 14px;
+        }
+        
+        .login-msg a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #d1f5c9, #a9eac7);
+            padding: 50px 20px;
+            text-align: center;
+            border-radius: 0 0 20px 20px;
+            margin-bottom: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+        }
+        
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--dark);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 25px;
+            color: #555;
+        }
+        
+        .subscribe-form {
+            display: flex;
+            justify-content: center;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        
+        .subscribe-input {
+            flex-grow: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 30px 0 0 30px;
+            font-size: 16px;
+            outline: none;
+        }
+        
+        .subscribe-button {
+            background: var(--primary);
+            color: white;
+            padding: 15px 25px;
+            border: none;
+            border-radius: 0 30px 30px 0;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        .subscribe-button:hover {
+            background: #009f3e;
+        }
+        
+        /* Advertisement Carousel */
+        .carousel {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            height: 200px;
+            box-shadow: var(--shadow);
+        }
+        
+        .carousel-inner {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s ease;
+        }
+        
+        .carousel-item {
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .carousel-item:nth-child(1) {
+            background: linear-gradient(135deg, #FF9966, #FF5E62);
+        }
+        
+        .carousel-item:nth-child(2) {
+            background: linear-gradient(135deg, #56CCF2, #2F80ED);
+        }
+        
+        .carousel-item:nth-child(3) {
+            background: linear-gradient(135deg, #A770EF, #CF8BF3, #FDB99B);
+        }
+        
+        .carousel-content {
+            text-align: center;
+            padding: 20px;
+            max-width: 80%;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: 10px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .carousel-content h3 {
+            margin-bottom: 10px;
+        }
+        
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255, 255, 255, 0.3);
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 2;
+        }
+        
+        .carousel-control:hover {
+            background: rgba(255, 255, 255, 0.5);
+        }
+        
+        .carousel-prev {
+            left: 10px;
+        }
+        
+        .carousel-next {
+            right: 10px;
+        }
+        
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+        }
+        
+        .carousel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .carousel-dot.active {
+            background: white;
+        }
+        
+        /* Section styles */
+        .section {
+            max-width: 1200px;
+            margin: 0 auto 40px;
+            padding: 0 20px;
+        }
+        
+        .section-title {
+            text-align: center;
+            color: var(--dark);
+            margin-bottom: 30px;
+            font-size: 28px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            border-radius: 2px;
+        }
+        
+        /* Product card styles */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 25px;
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .discount-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .product-image {
+            height: 180px;
+            width: 100%;
+            object-fit: contain;
+            background: var(--gray);
+            padding: 20px;
+            transition: all 0.3s;
+            mix-blend-mode: multiply; /* or darken */
+        }
+        
+        .product-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .product-content {
+            padding: 15px;
+        }
+        
+        .product-title {
+    color: var(--dark);
+    font-size: 16px;
+    margin-bottom: 10px;
+    font-weight: 600;
+    height: 40px;
+    overflow: hidden;
+    position: relative;
+    line-height: 20px; /* Two lines of text at 20px height each */
+}
+        
+        .product-category {
+            color: #777;
+            font-size: 12px;
+            margin-bottom: 8px;
+        }
+        
+        .product-description {
+    color: #666;
+    font-size: 12px;
+    margin-bottom: 15px;
+    height: 36px;
+    overflow: hidden;
+    position: relative;
+    line-height: 18px; /* Two lines of text at 18px height each */
+}
+        
+        .product-price {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .price-current {
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        
+        .price-original {
+            font-size: 14px;
+            text-decoration: line-through;
+            color: #999;
+            margin-left: 10px;
+        }
+        
+        .product-actions {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .btn {
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background: #009f3e;
+        }
+        
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+            border: none;
+        }
+        
+        .btn-secondary:hover {
+            background: #e55c00;
+        }
+        
+        .btn-full {
+            display: block;
+            width: 100%;
+        }
+        
+        /* Cart footer */
+        .cart-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.1);
+            z-index: 99;
+        }
+        
+        .cart-count {
+            font-size: 16px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .cart-count i {
+            color: var(--primary);
+            font-size: 20px;
+        }
+        
+        .cart-count span {
+            font-weight: bold;
+            background: var(--primary);
+            color: white;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+        }
+        
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            padding: 50px 20px 20px;
+            margin-top: 50px;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .footer-section h3 {
+            font-size: 18px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+            padding-left: 5px;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .social-links i {
+            font-size: 20px;
+        }
+        
+        .contact-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            width: 30px;
+            height: 30px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 30px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 14px;
+            color: #aaa;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .logo-search {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            
+            .search-form {
+                order: 3;
+                max-width: 100%;
+                margin-top: 10px;
+            }
+            
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            
+            .carousel {
+                height: 150px;
+            }
+            
+            .subscribe-form {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .subscribe-input, .subscribe-button {
+                border-radius: 30px;
+            }
+            
+            .carousel-content {
+                padding: 10px;
+            }
+            
+            .carousel-content h3 {
+                font-size: 18px;
+            }
+            
+            .carousel-content p {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo-search">
+                <a href="/" class="logo">
+                    <i class="fas fa-bolt"></i> Cartify
+                </a>
+            </div>
+            
+            <form class="search-form" action="/product/search" method="GET">
+                <input type="text" name="query" placeholder="Search for products..." class="search-input">
+                <button type="submit" class="search-button">
+                    <i class="fas fa-search"></i>
+                </button>
+            </form>
+            
+            <% if (user) { %>
+                <div class="nav-links">
+                    <a href="/profile/<%= user._id %>" class="nav-link">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </a>
+                    <a href="/orders" class="nav-link">
+                        <i class="fas fa-box"></i>
+                        <span>Orders</span>
+                    </a>
+                    <a href="/cart" class="nav-link">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Cart</span>
+                    </a>
+                </div>
+            <% } else { %>
+                <p class="login-msg">Please <a href="/auth/google">login</a> to access your profile, orders, and cart.</p>
+            <% } %>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h1>Fresh Vegetables Big Discount</h1>
+        <p>Save up to 50% on your first order</p>
+        <div class="subscribe-form">
+            <input type="text" placeholder="Your email address" class="subscribe-input">
+            <button class="subscribe-button">Subscribe</button>
+        </div>
+    </section>
+
+    <!-- Advertisement Carousel -->
+    <div class="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item">
+                <div class="carousel-content">
+                    <h3>Flash Sale: 30% OFF</h3>
+                    <p>Limited time offer on premium groceries</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-content">
+                    <h3>Free Delivery</h3>
+                    <p>On orders above ₹499</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <div class="carousel-content">
+                    <h3>New Arrivals</h3>
+                    <p>Explore our fresh organic collection</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control carousel-prev">
+            <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="carousel-control carousel-next">
+            <i class="fas fa-chevron-right"></i>
+        </button>
+        <div class="carousel-dots">
+            <div class="carousel-dot active"></div>
+            <div class="carousel-dot"></div>
+            <div class="carousel-dot"></div>
+        </div>
+    </div>
+
+    <!-- Random Discounted Products Section -->
+    <section class="section">
+        <h2 class="section-title">Exclusive 20% Discount Offers</h2>
+        <div class="product-grid">
+            <% rmproduct.forEach(product => { %>
+                <div class="product-card">
+                    <div class="discount-badge">20% OFF</div>
+                    <% if(product.image) { %>
+                        <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+                    <% } else { %>
+                        <img src="https://via.placeholder.com/300" alt="Default Product Image" class="product-image">
+                    <% } %>
+                    
+                    <div class="product-content">
+                        <h3 class="product-title"><%= product.name %></h3>
+                        <div class="product-price">
+                            <span class="price-current">₹<%= (product.price * 0.8).toFixed(2) %></span>
+                            <span class="price-original">₹<%= product.price %></span>
+                        </div>
+                        <a href="/cart/add/<%=product._id%>" class="btn btn-secondary btn-full">Grab Deal</a>
+                    </div>
+                </div>
+            <% }); %>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <% Object.keys(products).forEach(category => { %> 
+        <section class="section">
+            <h2 class="section-title"><%= category %></h2>
+            <div class="product-grid">
+                <% (products[category] || []).forEach(product => { %>  
+                    <div class="product-card">
+                        <% if(product.image) { %>
+                            <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+                        <% } else { %>
+                            <img src="https://via.placeholder.com/300" alt="Default Product Image" class="product-image">
+                        <% } %>
+                        
+                        <div class="product-content">
+                            <h3 class="product-title"><%= product.name %></h3>
+                            <p class="product-category">Category: <%= product.category %></p>
+                            <p class="product-description"><%= product.description %></p>
+                            <div class="product-price">
+                                <span class="price-current">₹<%= product.price %></span>
+                            </div>
+                            <a href="/cart/add/<%=product._id%>" class="btn btn-primary btn-full">Buy Now</a>
+                        </div>
+                    </div>
+                <% }); %>
+            </div>
+        </section>
+    <% }); %>
+
+    <% if (cartcount > 0) { %>
+        <!-- Cart Footer (Visible when cart is not empty) -->
+        <div class="cart-footer">
+            <div class="cart-count">
+                <i class="fas fa-shopping-cart"></i>
+                Items in Cart: <span><%= cartcount %></span>
+            </div>
+            <a href="/cart" class="btn btn-primary">Proceed to Cart</a>
+        </div>
+    <% } %>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>About Us</h3>
+                <p>Cartify is India's largest and most convenient online grocery store. We deliver fresh groceries, fruits, vegetables, and more in minutes.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Home</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Shop</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Categories</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Offers</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> My Account</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Customer Service</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> How to Order</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Shipping Policy</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Returns & Refunds</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Terms & Conditions</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <div class="contact-info">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <p>123 Street, Ranchi, Jharkhand, India</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-phone-alt"></i>
+                    <p>+91 12345 67890</p>
+                </div>
+                <div class="contact-info">
+                    <i class="fas fa-envelope"></i>
+                    <p>support@cartify.com</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>&copy; 2025 Cartify. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Save scroll position before the page unloads
+        window.addEventListener("beforeunload", function () {
+            localStorage.setItem("scrollPosition", window.scrollY);
+        });
+
+        // Restore scroll position when the page loads
+        window.addEventListener("load", function () {
+            const scrollPosition = localStorage.getItem("scrollPosition");
+            if (scrollPosition) {
+                window.scrollTo(0, parseInt(scrollPosition));
+            }
+        });
+
+        // Carousel functionality
+        const carousel = document.querySelector('.carousel-inner');
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.carousel-prev');
+        const nextBtn = document.querySelector('.carousel-next');
+        let currentIndex = 0;
+        const itemCount = carouselItems.length;
+
+        function updateCarousel() {
+            carousel.style.transform = `translateX(-${currentIndex * 100}%)`;
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+        }
+
+        function nextSlide() {
+            currentIndex = (currentIndex + 1) % itemCount;
+            updateCarousel();
+        }
+
+        function prevSlide() {
+            currentIndex = (currentIndex - 1 + itemCount) % itemCount;
+            updateCarousel();
+        }
+
+        prevBtn.addEventListener('click', prevSlide);
+        nextBtn.addEventListener('click', nextSlide);
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateCarousel();
+            });
+        });
+
+        // Auto slide
+        let interval = setInterval(nextSlide, 5000);
+
+        // Pause on hover
+        carousel.addEventListener('mouseenter', () => {
+            clearInterval(interval);
+        });
+
+        carousel.addEventListener('mouseleave', () => {
+            interval = setInterval(nextSlide, 5000);
+        });
+    </script>
+    
+</body>
+</html>

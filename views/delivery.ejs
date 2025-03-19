@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delivery Address</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* General Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-container {
+            width: 100%;
+            min-height: 100vh;
+            background: white;
+        }
+
+        .header {
+            background-color: #468c37;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-logo {
+            font-size: 20px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .form-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .delivery-banner {
+            background-color: #f9f9f9;
+            border-left: 4px solid #468c37;
+            padding: 15px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .delivery-icon {
+            font-size: 40px;
+            color: #468c37;
+            margin-right: 15px;
+        }
+
+        h2 {
+            color: #468c37;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+        }
+
+        .input-group {
+            margin-bottom: 16px;
+            text-align: left;
+            position: relative;
+        }
+
+        label {
+            font-size: 14px;
+            font-weight: bold;
+            color: #333;
+            display: block;
+            margin-bottom: 6px;
+        }
+
+        input {
+            width: calc(100% - 45px);
+            padding: 10px 10px 10px 40px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #468c37;
+            outline: none;
+            box-shadow: 0 0 4px rgba(70, 140, 55, 0.4);
+        }
+        
+        /* Fix for number input arrows - using simpler approach */
+        input[type="tel"]::-webkit-outer-spin-button,
+        input[type="tel"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 34px;
+            color: #468c37;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 12px;
+            background-color: #468c37;
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkout-btn:hover {
+            background-color: #3a7a2d;
+        }
+
+        .secure-badge {
+            margin-top: 15px;
+            font-size: 12px;
+            color: #555;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+        }
+
+        .policy-container {
+            margin-top: 30px;
+            padding: 15px;
+            background-color: #f8f8f8;
+            border-radius: 6px;
+        }
+
+        .policy-title {
+            font-weight: bold;
+            color: #468c37;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .policy-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+
+        .policy-icon {
+            color: #468c37;
+            margin-right: 10px;
+            margin-top: 2px;
+        }
+
+        footer {
+            background-color: #f4f4f4;
+            padding: 15px;
+            text-align: center;
+            color: #555;
+            font-size: 12px;
+            margin-top: 30px;
+        }
+
+        /* Two-column layout for larger screens */
+        @media (min-width: 768px) {
+            .form-row {
+                display: flex;
+                gap: 20px;
+            }
+            
+            .form-row .input-group {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="page-container">
+        <div class="header">
+            <div class="brand-logo">
+                <i class="fas fa-credit-card"></i> PaymentPro
+            </div>
+            <div>
+                <i class="fas fa-question-circle"></i>
+                <i class="fas fa-shopping-cart" style="margin-left: 15px;"></i>
+            </div>
+        </div>
+
+        <div class="form-container">
+            <div class="delivery-banner">
+                <i class="fas fa-shipping-fast delivery-icon"></i>
+                <div>
+                    <h2 style="margin: 0;">Delivery Address</h2>
+                    <p style="margin: 5px 0 0 0;">Please provide your accurate delivery details</p>
+                </div>
+            </div>
+
+            <form action="/cart/checkout" method="POST">
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="name">Full Name</label>
+                        <i class="fas fa-user input-icon"></i>
+                        <input type="text" id="name" name="name" placeholder="davidson" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="phone">Phone Number</label>
+                        <i class="fas fa-phone input-icon"></i>
+                        <input type="text" id="phone" name="phone" placeholder="+91xxxxxxxx" maxlength="10" pattern="[0-9]{10}" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="input-group">
+                        <label for="state">State</label>
+                        <i class="fas fa-flag input-icon"></i>
+                        <input type="text" id="state" name="state" placeholder="jammu" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="city">City</label>
+                        <i class="fas fa-city input-icon"></i>
+                        <input type="text" id="city" name="city" placeholder="srinagar" required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label for="zip">Pincode</label>
+                    <i class="fas fa-map-pin input-icon"></i>
+                    <input type="text" id="zip" name="zip" placeholder="834001" maxlength="6" pattern="[0-9]{6}" required>
+                </div>
+
+                <div class="policy-container">
+                    <div class="policy-title">
+                        <i class="fas fa-file-alt"></i> Delivery Policy
+                    </div>
+                    <div class="policy-item">
+                        <i class="fas fa-clock policy-icon"></i>
+                        <div>
+                            <strong>30-Minute Delivery</strong>: We guarantee delivery within 30 minutes of order confirmation.
+                        </div>
+                    </div>
+                    <div class="policy-item">
+                        <i class="fas fa-ban policy-icon"></i>
+                        <div>
+                            <strong>No Returns</strong>: All purchases are final and cannot be returned.
+                        </div>
+                    </div>
+                    <div class="policy-item">
+                        <i class="fas fa-times-circle policy-icon"></i>
+                        <div>
+                            <strong>No Cancellations</strong>: Orders cannot be cancelled once confirmed.
+                        </div>
+                    </div>
+                </div>
+
+                <button type="submit" class="checkout-btn">
+                    <i class="fas fa-shopping-cart"></i> Proceed to Checkout
+                </button>
+            </form>
+
+            <div class="secure-badge">
+                <i class="fas fa-lock"></i>
+                Secure Payment Powered by PaymentPro
+            </div>
+        </div>
+
+        <footer>
+            © 2025 PaymentPro. All rights reserved.
+        </footer>
+    </div>
+
+</body>
+</html>

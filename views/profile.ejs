@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary-color:  #afdda5;
+            --light-color: #ffffff;
+            --accent-color: #2f832f;
+            --text-color: #3a3737;
+            --light-text: #48c352;
+            --shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background:var(--primary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 280px;
+            height: 100vh;
+            background-color: var(--light-color);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            z-index: 10;
+        }
+        
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .profile-icon {
+            width: 120px;
+            height: 120px;
+            background: url('https://cdn-icons-png.flaticon.com/512/147/147144.png') no-repeat center/cover;
+            border-radius: 50%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 4px solid var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .profile-info h2 {
+            margin: 0;
+            font-size: 24px;
+            color: var(--text-color);
+        }
+        
+        .profile-info p {
+            color: var(--light-text);
+            font-size: 14px;
+        }
+        
+        .nav-links {
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+        
+        .nav-link {
+            padding: 12px 15px;
+            margin: 5px 0;
+            border-radius: 8px;
+            color: var(--text-color);
+            font-weight: 500;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .nav-link:hover {
+            background-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+        
+        .btn {
+            padding: 14px;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            margin-top: auto;
+        }
+        
+        .btn:hover {
+            background: #3d8b40;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        
+        .main-content {
+            margin-left: 280px;
+            padding: 40px;
+            min-height: 100vh;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+        
+        .header h1 {
+            font-size: 32px;
+            color: var(--text-color);
+        }
+        
+        .section {
+            margin-bottom: 40px;
+        }
+        
+        .section-title {
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--primary-color);
+            display: inline-block;
+        }
+        
+        .info-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background-color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+        }
+        
+        .info-row:hover {
+            transform: translateX(5px);
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow);
+        }
+        
+        .info-row strong {
+            min-width: 100px;
+            color: var(--text-color);
+        }
+        
+        .faq-item {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .faq-item:hover {
+            background-color: rgba(255, 255, 255, 0.9);
+            box-shadow: var(--shadow);
+        }
+        
+        .welcome-banner {
+            background-color: rgba(255, 255, 255, 0.7);
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            background-image: url('/image/Animation\ -\ 1742335534171.gif');
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 100px;
+        }
+        
+        .welcome-banner h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+                padding: 20px;
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+            
+            .profile-section {
+                flex-direction: row;
+                text-align: left;
+                padding: 10px 0;
+            }
+            
+            .profile-icon {
+                width: 80px;
+                height: 80px;
+                margin-right: 15px;
+                margin-bottom: 0;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .welcome-banner {
+                background-position: right 10px bottom 10px;
+                background-size: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <div class="profile-section">
+            <div class="profile-icon"></div>
+            <div class="profile-info">
+                <h2><%= profile.name %></h2>
+                <p>User Profile</p>
+            </div>
+        </div>
+        
+        <div class="nav-links">
+            <div class="nav-link">Dashboard</div>
+            <div class="nav-link">Account Settings</div>
+            <div class="nav-link">Saved Addresses</div>
+            <div class="nav-link">Help Center</div>
+        </div>
+        
+        <button class="btn" onclick="window.location.href='/auth/logout'">Logout</button>
+    </div>
+    
+    <div class="main-content">
+        <div class="welcome-banner">
+            <h2>Welcome back, <%= profile.name %>!</h2>
+            <p>Your profile dashboard is ready for you.</p>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">Personal Information</h3>
+            <div class="info-row">
+                <strong>ID:</strong> <%= profile._id %>
+            </div>
+            <div class="info-row">
+                <strong>Name:</strong> <%= profile.name %>
+            </div>
+            <div class="info-row">
+                <strong>Email:</strong> <%= profile.email %>
+            </div>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">Saved Addresses</h3>
+            <% if (profile.addresses.length > 0) { %>
+                <% profile.addresses.forEach(address => { %>
+                    <div class="info-row">
+                        <strong>Address:</strong> <%= address %>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="info-row">
+                    <p>No saved addresses</p>
+                </div>
+            <% } %>
+        </div>
+        
+        <div class="section">
+            <h3 class="section-title">Frequently Asked Questions</h3>
+            <div class="faq-item">
+                <p>How do I change my profile information?</p>
+            </div>
+            <div class="faq-item">
+                <p>How can I add a new address?</p>
+            </div>
+            <div class="faq-item">
+                <p>What happens if I forget my password?</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

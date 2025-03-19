@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #b5e8a5;
+            --primary-dark: #8bc87b;
+            --white: #ffffff;
+            --gray-light: #f8f9fa;
+            --gray: #e9ecef;
+            --text-dark: #343a40;
+            --text-muted: #6c757d;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--gray-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        
+        header {
+            background-color: var(--primary-color);
+            padding: 1.5rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        
+        h2 {
+            color: var(--text-dark);
+            text-align: center;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .search-container {
+            display: flex;
+            justify-content: center;
+            margin: 2rem auto;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+        }
+        
+        .search-container input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--gray);
+            border-radius: 50px;
+            font-size: 1rem;
+            box-shadow: var(--shadow);
+        }
+        
+        .search-container input:focus {
+            outline: none;
+            border-color: var(--primary-dark);
+        }
+        
+        .search-container .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+        
+        .search-container button {
+            position: absolute;
+            right: 5px;
+            top: 5px;
+            bottom: 5px;
+            padding: 0 1.5rem;
+            border: none;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .product-list {
+            list-style: none;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+        }
+        
+        .product-card {
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+        
+        .product-image {
+            height: 200px;
+            width: 100%;
+            background: var(--gray);
+            overflow: hidden;
+        }
+        
+        .product-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        
+        .product-info {
+            padding: 1.5rem;
+        }
+        
+        .product-name {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .product-category {
+            background-color: var(--primary-color);
+            color: var(--text-dark);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+        }
+        
+        .product-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 3rem;
+            font-size: 1.25rem;
+            color: var(--text-muted);
+        }
+        
+        .no-results i {
+            font-size: 3rem;
+            display: block;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin: 2rem auto;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary-dark);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 500;
+            box-shadow: var(--shadow);
+        }
+        
+        .back-container {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .buy-button {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: rgb(49, 185, 49);
+            color: var(--white);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 1rem;
+        }
+        .alert-alert-success{
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            text-align: center;
+
+        }
+        .action-buttons {
+    margin-top: 20px;
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    padding: 10px 15px;
+    font-size: 16px;
+    font-weight: 500;
+    text-decoration: none;
+   
+    background-color: #26500a;
+    color: #fff;
+    border: 2px solid #2da13d;
+    border-radius: 10px;
+    
+    transition: all 0.3s ease;
+}
+
+.btn i {
+    margin-right: 8px;
+}
+
+
+
+.btn-outline:hover {
+    background-color: #26500a;
+    color: #fff;
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h2><i class="fas fa-search"></i> Search Results</h2>
+        </div>
+    </header>
+    
+    <div class="container">
+        <% if (success_msg) { %>
+            <div class="alert-alert-success"><%= success_msg %></div>
+        <% } %>
+        <% if (error_msg) { %>
+            <div class="alert alert-danger"><%= error_msg %></div>
+        <% } %>
+
+        <div class="search-container">
+            <form action="/product/search" method="GET">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" name="query" placeholder="Search for products..." required>
+                <button type="submit">Search</button>
+            </form>
+        </div>
+        
+        <% if (products && products.length > 0) { %>
+            <ul class="product-list">
+                <% products.forEach(function(product) { %>
+                    <li class="product-card">
+                        <div class="product-image">
+                            <img src="<%= product.image %>" alt="<%= product.name %>">
+                        </div>
+                        <div class="product-info">
+                            <h3 class="product-name"><%= product.name %></h3>
+                            <div class="product-category"><%= product.category %></div>
+                            <div class="product-price"><%= product.price %></div>
+                            <form action="/cart/add/<%= product._id %>" method="GET">
+                                <button type="submit" class="buy-button">Buy</button>
+                            </form>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <div class="no-results">
+                <i class="fas fa-search"></i>
+                No products found.
+            </div>
+        <% } %>
+
+        <div class="action-buttons">
+            <a href="/" class="btn btn-outline continue-shopping">
+                <i class="fas fa-arrow-left"></i> Continue Shopping
+            </a>
+        </div>
+
+        
+    </div>
+</body>
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Admin Products</title>
+  <style>
+    .category {
+      margin-bottom: 20px;
+    }
+    .category h2 {
+      background: #333;
+      color: white;
+      padding: 10px;
+      border-radius: 5px;
+    }
+    .product {
+      border: 1px solid #ccc;
+      padding: 10px;
+      margin: 10px;
+      background: white;
+      box-shadow: 2px 2px 5px rgba(0,0,0,0.1);
+    }
+    .product img {
+    display: block; /* Ensures the image is visible */
+    max-width: 100px; /* Limits the width */
+    height: auto; /* Maintains aspect ratio */
+    border: 1px solid #ccc; /* Optional border */
+    padding: 5px;
+  }
+  </style>
+</head>
+<body>
+  <h1>Admin Products</h1>
+
+  <% Object.keys(products).forEach(category => { %>  
+     <div class="category">
+       <h2><%= category %></h2>
+       <div class="products">
+         <% products[category].forEach(product => { %> 
+           <div class="product">
+             <p><strong>Product Name:</strong> <%= product.name %></p>
+             <p><strong>Price:</strong> ₹<%= product.price %></p>
+             <p><strong>Stock:</strong> <%= product.stock ? 'In Stock' : 'Out of Stock' %></p>
+             <p><strong>Description:</strong> <%= product.description %></p>
+             
+             
+             
+        
+             <% if(product.image) { %>
+              <img src="<%= product.image %>" alt="Product Image" width="100" class="product-image">
+          <% } else { %>
+              <img src="https://via.placeholder.com/100" alt="Default Product Image" width="100" class="product-image">
+          <% } %>
+          
+             
+            
+           
+            
+          
+
+
+             <button><a href="/product/delete/<%=product._id %>">Delete</a></button>
+           </div>
+         <% }); %>
+       </div>
+     </div>
+   <% }); %>
+   
+</body>
+</html>

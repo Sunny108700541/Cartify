@@ -1,0 +1,47 @@
+router.get("/", userIsLoggedIn, async function (req, res) {
+  try {
+    let cart = await cartModel.findOne({ user: req.session.passport.user }).populate("products"); 
+    console.log("Populated Cart:", JSON.stringify(cart, null, 2));
+    //if (!cart) {
+      //console.log("No cart found");
+      //return res.render("cart", { cart: { products: [] }, totalAmount: 0 });
+    //}
+    if (!cart || !cart.products || !Array.isArray(cart.products)) {
+      console.log("No cart or empty cart found!");
+      return res.render("cart", { cart: { products: [] }, totalAmount: 0 });
+    }
+    // debug code remove it later
+    cart.products = cart.products.filter(p => p && p._id);
+    console.log("Cart Products After Filtering:", cart.products); // Debugging
+
+
+
+
+
+    let cartDataStructure = {};
+
+    cart.products.forEach((item) => {
+      if (!product || !product._id) {
+        console.log("Error: Undefined Product Found ->", product); // Debugging
+      }
+      //let productId = item.product._id.toString();
+      let productId = item._id.toString();
+
+      if (cartDataStructure[productId]) {
+        cartDataStructure[productId].quantity += 1;
+      } else {
+        cartDataStructure[productId] = {
+          ...item.product._doc,
+          quantity: 1,
+        };
+      }
+    });
+
+    let finalarray = Object.values(cartDataStructure);
+    let totalAmount = finalarray.reduce((sum, item) => sum + item.price * item.quantity, 0);
+
+    res.render("cart", { cart: { products: finalarray }, totalAmount });
+  } catch (err) {
+    res.send(err.message);
+  }
+});
