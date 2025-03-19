@@ -387,9 +387,9 @@
             
             // Hide overlay and redirect after 1 second
             setTimeout(function() {
-                // For demonstration - in production, this would happen after server response
-                window.location.href = '/payment/process-payment'; // Redirect to index page
-            }, 1000);
+            window.location.href = `${window.location.origin}/payment/process-payment`;
+        }, 1000);
+
         });
     </script>
 </body>
