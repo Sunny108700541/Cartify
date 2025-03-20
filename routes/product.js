@@ -41,7 +41,8 @@ router.get("/", userIsLoggedIn, async function(req, res) {
          res.render("index", { products: formattedProducts,rmproduct ,somethingInCart,cartcount:cart.products.length,user});
      } catch (err) {
          console.error(err);
-         res.status(500).send("Error fetching products");
+       res.redirect("/users/login"); // Redirect to login page on error
+         //res.status(500).send("Error fetching products");
      }
  });
 
@@ -140,9 +141,9 @@ router.get("/list", async function (req, res) {
          res.render("searchResults", { products });
      } catch (error) {
          console.log("Error while searching:", error);
-         //res.status(500).send("Internal Server Error");
+         res.status(500).send("Internal Server Error");
       // res.redirect("/login"); // Redirect to login page on error
-       res.redirect("/users/login"); // Redirect to login page on error
+      
      }
  });
 
