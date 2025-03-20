@@ -16,7 +16,7 @@ const upload=require("../config/multerconfig");
   //   res.render("index",{products});
 //});
 
-router.get("/", userIsLoggedIn, async function(req, res) {
+router.get("/",  async function(req, res) {
      try {
           let somethingInCart = false;
          let products = await productModel.find();
@@ -41,8 +41,8 @@ router.get("/", userIsLoggedIn, async function(req, res) {
          res.render("index", { products: formattedProducts,rmproduct ,somethingInCart,cartcount:cart.products.length,user});
      } catch (err) {
          console.error(err);
-       res.redirect("/users/login"); // Redirect to login page on error
-         //res.status(500).send("Error fetching products");
+      // Redirect to login page on error
+         res.status(500).send("PLEASE CLOSE  BROWSER AND REOPEN YOU WILL LOGGED IN! .....TRUST ME.......");
      }
  });
 
