@@ -16,7 +16,7 @@ const upload=require("../config/multerconfig");
   //   res.render("index",{products});
 //});
 
-router.get("/",  async function(req, res) {
+router.get("/", userIsLoggedIn, async function(req, res) {
      try {
           let somethingInCart = false;
          let products = await productModel.find();
@@ -42,7 +42,7 @@ router.get("/",  async function(req, res) {
      } catch (err) {
          console.error(err);
       // Redirect to login page on error
-         res.status(500).send("PLEASE CLOSE  BROWSER AND REOPEN YOU WILL LOGGED IN! .....TRUST ME.......");
+         res.status(500).send("------------>PLEASE CLOSE  BROWSER AND REOPEN YOU WILL LOGGED IN! .....TRUST ME.......😊");
      }
  });
 
