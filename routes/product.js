@@ -140,7 +140,9 @@ router.get("/list", async function (req, res) {
          res.render("searchResults", { products });
      } catch (error) {
          console.log("Error while searching:", error);
-         res.status(500).send("Internal Server Error");
+         //res.status(500).send("Internal Server Error");
+      // res.redirect("/login"); // Redirect to login page on error
+       res.redirect("/users/login"); // Redirect to login page on error
      }
  });
 
